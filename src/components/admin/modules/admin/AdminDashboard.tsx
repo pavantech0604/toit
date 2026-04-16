@@ -18,21 +18,24 @@ interface StatCardProps {
 }
 
 const StatCard = ({ title, value, change, isPositive, icon: Icon }: StatCardProps) => (
-  <div className="bg-surface border border-iron/30 p-6 rounded-2xl hover:border-gold/30 transition-colors gold-glow">
+  <div className="bg-white/40 backdrop-blur-sm border border-brand-maroon/20 p-6 rounded-sm hover:border-brand-gold/50 transition-all group relative overflow-hidden shadow-sm hover:shadow-md">
+    {/* Metallic Accent Line */}
+    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-gold/30 to-transparent" />
+    
     <div className="flex justify-between items-start mb-4">
-      <div className="p-3 bg-base rounded-xl border border-iron/50">
-        <Icon size={24} className="text-gold" />
+      <div className="p-3 bg-brand-maroon/5 rounded-sm border border-brand-maroon/10 group-hover:bg-brand-gold/10 transition-colors">
+        <Icon size={20} className="text-brand-maroon group-hover:text-brand-gold transition-colors" />
       </div>
-      <div className={isPositive ? "text-status-success" : "text-status-warning"}>
-        <div className="flex items-center text-xs font-bold gap-0.5">
-          {isPositive ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
+      <div className={isPositive ? "text-emerald-700" : "text-brand-maroon"}>
+        <div className="flex items-center text-[10px] font-black uppercase tracking-widest gap-0.5">
+          {isPositive ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
           {change}
         </div>
       </div>
     </div>
     <div>
-      <h3 className="text-smoke text-sm font-medium tracking-tight uppercase">{title}</h3>
-      <p className="text-2xl font-serif font-bold mt-1 text-ivory">{value}</p>
+      <h3 className="text-brand-maroon/60 text-[10px] font-black tracking-[0.2em] uppercase mb-1">{title}</h3>
+      <p className="text-3xl font-heading font-black text-brand-maroon tracking-tighter leading-none">{value}</p>
     </div>
   </div>
 );
@@ -73,39 +76,45 @@ export default function AdminDashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Chart Area (Mock) */}
-        <div className="lg:col-span-2 bg-surface border border-iron/30 rounded-3xl p-8 relative overflow-hidden">
-          <div className="flex justify-between items-center mb-8">
+        {/* Main Chart Area */}
+        <div className="lg:col-span-2 bg-white/60 backdrop-blur-sm border border-brand-maroon/10 rounded-sm p-10 relative overflow-hidden shadow-sm">
+           {/* Ledger Pattern Background */}
+           <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/notebook.png')]" />
+
+          <div className="flex justify-between items-center mb-10 relative z-10">
             <div>
-              <h3 className="text-xl font-serif font-bold text-ivory uppercase tracking-tighter">Occupancy Heatmap</h3>
-              <p className="text-smoke text-sm font-sans underline decoration-gold/30 underline-offset-4">Real-time table distribution across floors</p>
+              <h3 className="text-2xl font-heading font-black text-brand-maroon uppercase tracking-tighter italic">Occupancy Heatmap</h3>
+              <p className="text-brand-maroon/40 text-[9px] font-black uppercase tracking-[0.3em] mt-1 italic italic underline decoration-brand-gold/40 underline-offset-8">Real-time table distribution across floors</p>
             </div>
-            <button className="p-2 hover:bg-white/5 rounded-lg text-smoke">
+            <button className="p-3 hover:bg-brand-maroon/5 rounded-full text-brand-maroon/40 transition-colors border border-brand-maroon/10">
               <MoreVertical size={20} />
             </button>
           </div>
           
-          <div className="h-64 w-full flex items-end gap-2 px-2 relative z-10">
+          <div className="h-64 w-full flex items-end gap-3 px-4 relative z-10">
             {[40, 65, 80, 55, 90, 100, 85, 45, 60, 75, 95, 80].map((val, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center gap-2 group">
+              <div key={i} className="flex-1 flex flex-col items-center gap-4 group">
                 <div 
-                  className="w-full bg-gold/10 border border-gold/30 rounded-t-lg transition-all duration-700 group-hover:bg-gold/40 group-hover:translate-y-[-4px]"
+                  className="w-full bg-brand-maroon/5 border border-brand-maroon/10 rounded-sm transition-all duration-700 group-hover:bg-brand-gold/30 group-hover:border-brand-gold/50 group-hover:translate-y-[-4px]"
                   style={{ height: `${val}%` }}
                 />
-                <span className="text-[10px] text-zinc-600 font-mono tracking-tighter">{12 + i}:00</span>
+                <span className="text-[9px] text-brand-maroon/30 font-black tracking-widest uppercase">{12 + i}:00</span>
               </div>
             ))}
           </div>
           
-          <div className="absolute -top-10 -right-10 opacity-5 pointer-events-none">
-            <Beer size={320} className="text-gold" />
+          <div className="absolute -bottom-20 -right-20 opacity-[0.05] pointer-events-none rotate-12">
+            <Beer size={420} className="text-brand-maroon" />
           </div>
         </div>
 
         {/* Side List: Top Selling Brews */}
-        <div className="bg-surface border border-iron/30 rounded-3xl p-8 shadow-xl">
-          <h3 className="text-xl font-serif font-bold mb-6 text-ivory uppercase">Top Selling Brews</h3>
-          <div className="space-y-6">
+        <div className="bg-brand-maroon text-brand-ivory border border-brand-maroon rounded-sm p-10 shadow-2xl relative overflow-hidden">
+           {/* Dark Grain Texture */}
+           <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
+
+          <h3 className="text-2xl font-heading font-black mb-8 text-brand-gold uppercase tracking-tighter italic relative z-10">Top Selling Brews</h3>
+          <div className="space-y-8 relative z-10">
             {[
               { name: 'Toit Weiss', volume: '124 L', share: 32 },
               { name: 'Basmati Blonde', volume: '98 L', share: 25 },
@@ -113,22 +122,22 @@ export default function AdminDashboard() {
               { name: 'Tintin Toit', volume: '45 L', share: 12 },
               { name: 'Seasonal: Mango Ale', volume: '30 L', share: 8 },
             ].map((brew, i) => (
-              <div key={i} className="space-y-2 group">
-                <div className="flex justify-between text-sm">
-                  <span className="font-medium text-ivory group-hover:text-gold transition-colors">{brew.name}</span>
-                  <span className="text-gold font-mono text-xs">{brew.volume}</span>
+              <div key={i} className="space-y-3 group">
+                <div className="flex justify-between items-end">
+                  <span className="font-brand font-black text-sm uppercase tracking-wide group-hover:text-brand-gold transition-colors">{brew.name}</span>
+                  <span className="text-brand-gold font-mono text-[10px] font-black border border-brand-gold/30 px-2 py-0.5 rounded-sm">{brew.volume}</span>
                 </div>
-                <div className="h-1.5 w-full bg-base rounded-full overflow-hidden border border-iron/30 p-[1px]">
+                <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden p-[1px]">
                   <div 
-                    className="h-full bg-gradient-to-r from-copper to-gold transition-all duration-[1.5s] ease-out shadow-[0_0_10px_rgba(212,155,53,0.4)]" 
+                    className="h-full bg-brand-gold transition-all duration-[1.5s] ease-out shadow-[0_0_15px_rgba(253,185,19,0.5)]" 
                     style={{ width: `${brew.share}%` }}
                   />
                 </div>
               </div>
             ))}
           </div>
-          <button className="w-full mt-8 py-3 rounded-xl border border-iron/50 text-sm font-bold text-smoke hover:border-gold hover:text-ivory hover:bg-gold/5 transition-all uppercase tracking-widest">
-            Inventory Deep Dive
+          <button className="w-full mt-12 py-4 rounded-sm border border-brand-gold/30 text-[10px] font-black text-brand-gold hover:bg-brand-gold hover:text-brand-maroon transition-all uppercase tracking-[0.4em] relative z-10">
+            Internal Audit
           </button>
         </div>
       </div>

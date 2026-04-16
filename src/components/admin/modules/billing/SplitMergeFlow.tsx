@@ -61,31 +61,37 @@ export default function SplitMergeFlow() {
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="h-full flex flex-col gap-8"
+      className="h-full flex flex-col gap-10"
     >
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 bg-gold/10 border border-gold/30 rounded-2xl flex items-center justify-center text-gold shadow-lg shadow-gold/10">
-             <Split size={28} strokeWidth={2.5} />
+      <div className="flex justify-between items-end bg-white/40 p-10 border border-brand-maroon/10 rounded-sm shadow-sm relative overflow-hidden">
+        {/* Parchment Overlay */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
+
+        <div className="flex items-center gap-6 relative z-10">
+          <div className="w-16 h-16 bg-brand-maroon text-brand-ivory rounded-sm flex items-center justify-center shadow-xl border-4 border-white">
+             <Split size={32} strokeWidth={3} />
           </div>
           <div>
-            <h3 className="text-2xl font-serif font-bold text-ivory tracking-tight">Bill Dissection</h3>
-            <p className="text-smoke text-sm font-sans underline decoration-gold/30 underline-offset-4 decoration-2">Table 12 • Total ₹1,810</p>
+            <h3 className="text-4xl font-heading font-black text-brand-maroon uppercase tracking-tighter italic leading-none">Bill Dissection</h3>
+            <p className="text-brand-maroon/40 text-[10px] font-black uppercase tracking-[0.4em] mt-3 italic flex items-center gap-2">
+               <div className="w-4 h-[1px] bg-brand-maroon/20" />
+               TABLE 12 • REGISTRY TOTAL ₹1,810
+            </p>
           </div>
         </div>
-        <div className="flex gap-4">
-          <button className="bg-base border border-iron/30 px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-smoke hover:text-ivory hover:border-ivory/30 transition-all flex items-center gap-3">
-            <Merge size={16} />
+        <div className="flex gap-4 relative z-10">
+          <button className="bg-brand-maroon/5 border-2 border-brand-maroon/10 px-8 py-4 rounded-sm text-[10px] font-black uppercase tracking-[0.2em] text-brand-maroon/60 hover:text-brand-maroon hover:border-brand-maroon transition-all flex items-center gap-3 italic">
+            <Merge size={16} strokeWidth={3} />
             CONSOLIDATE ALL
           </button>
           <motion.button 
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={addBill}
-            className="bg-gold text-base px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-3 gold-glow shadow-lg shadow-gold/20"
+            className="bg-brand-maroon text-brand-ivory px-8 py-4 rounded-sm text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3 shadow-xl shadow-brand-maroon/20 border-2 border-brand-maroon transition-all"
           >
             <Plus size={20} strokeWidth={3} />
-            NEW SUB-BILL
+            FORGE SUB-BILL
           </motion.button>
         </div>
       </div>
@@ -99,53 +105,56 @@ export default function SplitMergeFlow() {
               <motion.div 
                 key={bill.id} 
                 layout
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="w-[420px] flex flex-col bg-surface border border-iron/30 rounded-[3rem] overflow-hidden shrink-0 shadow-2xl relative group"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="w-[450px] flex flex-col bg-white/60 backdrop-blur-md border border-brand-maroon/10 rounded-sm overflow-hidden shrink-0 shadow-sm relative group"
               >
-                <div className="p-8 bg-base/30 border-b border-iron/10 flex justify-between items-center backdrop-blur-md">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-gold/5 border border-gold/20 flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-base transition-all duration-300">
-                      <User size={22} strokeWidth={2.5} />
+                 {/* Ledger texture */}
+                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/notebook.png')]" />
+
+                <div className="p-10 bg-brand-maroon/5 border-b border-brand-maroon/10 flex justify-between items-center relative z-10">
+                  <div className="flex items-center gap-6">
+                    <div className="w-16 h-16 rounded-full bg-brand-maroon/5 border-2 border-brand-maroon/5 flex items-center justify-center text-brand-maroon/20 group-hover:bg-brand-maroon group-hover:text-brand-ivory transition-all duration-500">
+                      <User size={24} strokeWidth={3} />
                     </div>
                     <div>
-                      <span className="font-serif font-black text-xl text-ivory tracking-tight">Guest {bill.id}</span>
-                      <p className="text-[10px] text-smoke uppercase font-black tracking-widest opacity-60">ACTIVE SUB-BILL</p>
+                      <span className="font-heading font-black text-2xl text-brand-maroon tracking-tighter uppercase italic leading-none">Guest {bill.id}</span>
+                      <p className="text-[9px] text-brand-maroon/40 uppercase font-black tracking-[0.3em] mt-2 italic">Active Entry</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="text-gold font-mono font-black text-2xl drop-shadow-[0_0_10px_rgba(212,155,53,0.3)]">₹{total}</span>
+                    <span className="text-brand-gold font-mono font-black text-3xl tracking-tighter italic shadow-sm">₹{total}</span>
                   </div>
                 </div>
 
-                <div className="flex-1 p-8 space-y-4 overflow-y-auto custom-scrollbar bg-base/10 relative">
+                <div className="flex-1 p-10 space-y-6 overflow-y-auto custom-scrollbar relative z-10">
                   {bill.items.length === 0 ? (
-                    <div className="h-full flex flex-col items-center justify-center text-smoke space-y-6 opacity-40 italic">
-                      <div className="w-24 h-24 rounded-full border-2 border-dashed border-iron/50 flex items-center justify-center">
-                        <Receipt size={32} />
+                    <div className="h-full flex flex-col items-center justify-center text-brand-maroon/20 space-y-8 opacity-40 italic">
+                      <div className="w-24 h-24 rounded-full border-4 border-dashed border-brand-maroon/10 flex items-center justify-center">
+                        <Receipt size={36} strokeWidth={3} />
                       </div>
-                      <p className="text-[10px] font-black uppercase tracking-[0.25em]">Empty Ledger</p>
+                      <p className="text-[10px] font-black uppercase tracking-[0.4em]">Sub-Ledger Empty</p>
                     </div>
                   ) : (
                     bill.items.map((item) => (
                       <motion.div 
                         key={item.id} 
                         layoutId={item.id}
-                        className="group/item p-5 bg-base/50 border border-iron/30 rounded-2xl flex justify-between items-center transition-all hover:border-gold/30 hover:bg-gold/[0.02]"
+                        className="group/item p-6 bg-white/40 border-2 border-brand-maroon/5 rounded-sm flex justify-between items-center transition-all hover:border-brand-maroon/20 hover:bg-brand-maroon/5"
                       >
                         <div>
-                          <h5 className="text-sm font-bold text-ivory tracking-tight">{item.name}</h5>
-                          <p className="text-[10px] text-zinc-500 font-mono">₹{item.price}</p>
+                          <h5 className="text-[11px] font-black text-brand-maroon uppercase tracking-widest italic group-hover:text-brand-gold transition-colors">{item.name}</h5>
+                          <p className="text-[13px] text-brand-maroon/40 font-mono font-black mt-1 italic group-hover:text-brand-maroon transition-colors">₹{item.price}</p>
                         </div>
-                        <div className="flex items-center gap-2 opacity-0 group-hover/item:opacity-100 transition-all translate-x-2 group-hover/item:translate-x-0">
+                        <div className="flex items-center gap-3 opacity-0 group-hover/item:opacity-100 transition-all translate-x-4 group-hover/item:translate-x-0">
                           {bills.filter(b => b.id !== bill.id).map(target => (
                             <button 
                               key={target.id}
                               onClick={() => moveItem(bill.id, target.id, item.id)}
-                              className="w-10 h-10 rounded-xl bg-gold/10 text-gold flex items-center justify-center hover:bg-gold hover:text-base hover:scale-110 active:scale-90 transition-all border border-gold/20"
-                              title={`Move to Guest ${target.id}`}
+                              className="w-12 h-12 rounded-full bg-brand-maroon text-brand-ivory flex items-center justify-center hover:bg-brand-gold hover:scale-110 active:scale-90 transition-all shadow-lg border-4 border-white"
+                              title={`Transfer to Guest ${target.id}`}
                             >
-                              <ChevronRight size={18} strokeWidth={3} />
+                              <ChevronRight size={20} strokeWidth={4} />
                             </button>
                           ))}
                         </div>
@@ -154,11 +163,11 @@ export default function SplitMergeFlow() {
                   )}
                 </div>
 
-                <div className="p-8 bg-base/30 border-t border-iron/10">
+                <div className="p-10 bg-brand-maroon/5 border-t border-brand-maroon/10 relative z-10">
                   <motion.button 
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full py-5 rounded-[1.5rem] bg-gold text-base text-[10px] font-black uppercase tracking-[0.2em] hover:brightness-110 shadow-xl shadow-gold/20 transition-all gold-glow"
+                    className="w-full py-6 rounded-sm bg-brand-maroon text-brand-ivory text-[11px] font-black uppercase tracking-[0.3em] hover:bg-brand-gold transition-all border-2 border-brand-maroon shadow-lg"
                   >
                     FINALIZE GUEST {bill.id}
                   </motion.button>
@@ -166,7 +175,7 @@ export default function SplitMergeFlow() {
 
                 {/* Aesthetic Backdrop */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.02] pointer-events-none group-hover:scale-110 group-hover:opacity-[0.04] transition-all duration-1000">
-                   <Users size={300} strokeWidth={1} />
+                   <Users size={350} strokeWidth={1} />
                 </div>
               </motion.div>
             );

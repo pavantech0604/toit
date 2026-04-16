@@ -65,15 +65,15 @@ export default function POSBilling() {
       {/* Items Section */}
       <div className="flex-1 flex flex-col gap-8 overflow-hidden">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3 overflow-x-auto pb-1 scrollbar-hide flex-1">
+          <div className="flex items-center gap-4 overflow-x-auto pb-1 scrollbar-hide flex-1">
             {['Brews', 'Eat', 'Pizza', 'Sides', 'Cocktails'].map(cat => (
               <button 
                 key={cat} 
                 onClick={() => setActiveTab(cat)}
-                className={`px-8 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border ${
+                className={`px-8 py-4 rounded-sm text-[11px] font-black uppercase tracking-[0.2em] transition-all border-2 ${
                   cat === activeTab 
-                    ? 'bg-gold text-base border-gold gold-glow shadow-xl shadow-gold/10' 
-                    : 'bg-surface text-smoke border-iron/30 hover:border-ivory/20 hover:text-ivory'
+                    ? 'bg-brand-maroon text-brand-ivory border-brand-maroon shadow-xl' 
+                    : 'bg-white/40 text-brand-maroon border-brand-maroon/20 hover:border-brand-maroon hover:bg-brand-maroon/5'
                 }`}
               >
                 {cat}
@@ -81,8 +81,8 @@ export default function POSBilling() {
             ))}
           </div>
           <div className="relative group ml-4">
-             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-smoke group-focus-within:text-gold transition-colors" size={18} />
-             <input type="text" placeholder="Quick search..." className="bg-surface border border-iron/30 rounded-2xl pl-12 pr-4 py-3.5 text-sm focus:border-gold outline-none w-64 shadow-inner" />
+             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-maroon/40 group-focus-within:text-brand-maroon transition-colors" size={18} />
+             <input type="text" placeholder="Search Inventory..." className="bg-white/40 border-2 border-brand-maroon/10 rounded-sm pl-12 pr-4 py-4 text-sm font-black uppercase tracking-widest focus:border-brand-maroon outline-none w-72 placeholder:text-brand-maroon/20" />
           </div>
         </div>
 
@@ -90,58 +90,54 @@ export default function POSBilling() {
           {ITEMS.filter(i => activeTab === 'All' || i.category === activeTab).map(item => (
             <motion.button 
               key={item.id}
-              whileHover={{ y: -4, scale: 1.02 }}
+              whileHover={{ y: -4 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => addToCart(item)}
-              className="bg-surface border border-iron/30 p-8 rounded-[2.5rem] text-left hover:border-gold/30 gold-glow transition-all relative group overflow-hidden"
+              className="bg-white/60 backdrop-blur-sm border border-brand-maroon/10 p-8 rounded-sm text-center hover:border-brand-gold/50 transition-all relative group overflow-hidden shadow-sm"
             >
-              <div className="w-16 h-16 rounded-[1.25rem] bg-base border border-iron/30 flex items-center justify-center mb-6 group-hover:bg-gold/10 group-hover:border-gold/50 group-hover:text-gold transition-all duration-500 relative z-10">
-                {item.category === 'Brews' ? <Beer size={28} /> : item.category === 'Pizza' ? <Pizza size={28} /> : <Flame size={28} />}
+              <div className="w-20 h-20 mx-auto rounded-full bg-brand-maroon/5 border border-brand-maroon/10 flex items-center justify-center mb-6 group-hover:bg-brand-gold/10 group-hover:border-brand-gold/50 group-hover:text-brand-gold transition-all duration-500 relative z-10">
+                {item.category === 'Brews' ? <Beer size={32} /> : item.category === 'Pizza' ? <Pizza size={32} /> : <Flame size={32} />}
               </div>
-              <h4 className="font-serif font-bold text-lg text-ivory leading-tight mb-2 relative z-10 tracking-tight group-hover:text-gold transition-colors">{item.name}</h4>
-              <p className="text-gold font-mono font-black text-xl relative z-10">₹{item.price}</p>
-              <div className="absolute -bottom-8 -right-8 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity pointer-events-none group-hover:scale-110 duration-700">
-                {item.category === 'Brews' ? <Beer size={180} /> : item.category === 'Pizza' ? <Pizza size={180} /> : <Flame size={180} />}
-              </div>
-              <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
-                <div className="w-10 h-10 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center text-gold">
-                  <Plus size={20} strokeWidth={3} />
-                </div>
+              <h4 className="font-heading font-black text-xl text-brand-maroon leading-none mb-3 relative z-10 tracking-tighter uppercase italic">{item.name}</h4>
+              <p className="text-brand-gold font-mono font-black text-2xl relative z-10">₹{item.price}</p>
+              
+              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all">
+                <Plus size={16} className="text-brand-gold" />
               </div>
             </motion.button>
           ))}
         </div>
       </div>
-
-      {/* Cart Section */}
-      <div className="w-[420px] bg-surface border border-iron/30 rounded-[3rem] flex flex-col shadow-2xl relative overflow-hidden">
-        <div className="absolute inset-0 bg-base/10 pointer-events-none" />
+      {/* Cart Section: The Parchment Ledger */}
+      <div className="w-[450px] bg-[#fdfcf9] border-l-4 border-double border-brand-maroon/20 flex flex-col shadow-[-10px_0_30px_rgba(0,0,0,0.05)] relative overflow-hidden">
+        {/* Parchment Texture */}
+        <div className="absolute inset-0 opacity-[0.1] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
         
-        <div className="p-10 border-b border-iron/30 flex justify-between items-center relative z-10 bg-base/20 backdrop-blur-sm">
+        <div className="p-10 border-b border-brand-maroon/10 flex justify-between items-center relative z-10 bg-white/40">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-gold/10 border border-gold/30 flex items-center justify-center text-gold shadow-[0_0_20px_rgba(212,155,53,0.1)]">
-              <Hash size={24} strokeWidth={2.5} />
+            <div className="w-14 h-14 rounded-full bg-brand-maroon/5 border-2 border-brand-maroon/20 flex items-center justify-center text-brand-maroon shadow-sm">
+              <Hash size={24} strokeWidth={3} />
             </div>
             <div>
-              <h4 className="font-serif font-black text-xl text-ivory tracking-tight leading-none mb-1">Table {table}</h4>
-              <p className="text-[10px] text-smoke uppercase tracking-[0.25em] font-black opacity-80">STATION #01 • ORDER #8921</p>
+              <h4 className="font-heading font-black text-2xl text-brand-maroon tracking-tighter leading-none mb-1 italic">TABLE {table}</h4>
+              <p className="text-[9px] text-brand-maroon/40 uppercase tracking-[0.4em] font-black">STATION #01 • LEDGER-042</p>
             </div>
           </div>
-          <button className="p-4 bg-base/50 hover:bg-white/5 border border-iron/30 rounded-2xl text-smoke hover:text-gold transition-all"><User size={22} /></button>
+          <button className="w-12 h-12 rounded-full border border-brand-maroon/10 flex items-center justify-center text-brand-maroon/40 hover:text-brand-maroon transition-colors"><User size={20} /></button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-10 space-y-8 custom-scrollbar relative z-10">
+        <div className="flex-1 overflow-y-auto p-10 space-y-10 custom-scrollbar relative z-10">
           <AnimatePresence mode="popLayout">
             {cart.length === 0 ? (
               <motion.div 
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.3 }}
-                className="h-full flex flex-col items-center justify-center text-smoke space-y-6"
+                animate={{ opacity: 0.5 }}
+                className="h-full flex flex-col items-center justify-center text-brand-maroon/20 space-y-4"
               >
-                <div className="w-32 h-32 rounded-full border-2 border-dashed border-iron/50 flex items-center justify-center">
-                   <Receipt size={48} strokeWidth={1} />
+                <div className="w-24 h-24 rounded-full border-2 border-brand-maroon/10 flex items-center justify-center">
+                   <Receipt size={40} strokeWidth={1} />
                 </div>
-                <p className="text-sm font-black uppercase tracking-[0.2em] italic">Awaiting order...</p>
+                <p className="text-[10px] font-black uppercase tracking-[0.5em] italic">Open Check Ledger</p>
               </motion.div>
             ) : (
               cart.map(item => (
@@ -151,24 +147,22 @@ export default function POSBilling() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
-                  className="flex justify-between items-center group"
+                  className="flex justify-between items-start group"
                 >
-                  <div className="flex items-center gap-5">
-                    <div className="relative">
-                      <div className="w-12 h-12 rounded-xl bg-gold/5 border border-gold/20 flex items-center justify-center text-gold font-black font-mono text-sm group-hover:bg-gold group-hover:text-base transition-all duration-300">
-                        {item.qty}
-                      </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-sm bg-brand-maroon/5 border border-brand-maroon/10 flex items-center justify-center text-brand-maroon font-black font-mono text-xs">
+                      {item.qty}
                     </div>
                     <div>
-                      <h5 className="font-serif font-bold text-base text-ivory tracking-tight mb-0.5">{item.name}</h5>
-                      <p className="text-[9px] text-smoke font-black uppercase tracking-widest">₹{item.price} UNIT COST</p>
+                      <h5 className="font-brand font-black text-sm text-brand-maroon tracking-tight mb-1 uppercase leading-none">{item.name}</h5>
+                      <p className="text-[9px] text-brand-maroon/40 font-black tracking-widest uppercase italic">₹{item.price} EA</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <span className="font-mono font-black text-ivory text-sm">₹{item.price * item.qty}</span>
-                    <div className="flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
-                      <button onClick={() => updateQty(item.id, 1)} className="p-1 hover:text-gold transition-colors"><Plus size={14} strokeWidth={3} /></button>
-                      <button onClick={() => updateQty(item.id, -1)} className="p-1 hover:text-copper transition-colors"><Minus size={14} strokeWidth={3} /></button>
+                  <div className="flex items-center gap-4 pt-0.5">
+                    <span className="font-mono font-black text-brand-maroon text-sm">₹{item.price * item.qty}</span>
+                    <div className="flex items-center gap-1 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all">
+                      <button onClick={() => updateQty(item.id, 1)} className="p-1 text-brand-maroon hover:text-brand-gold transition-colors"><Plus size={14} strokeWidth={3} /></button>
+                      <button onClick={() => updateQty(item.id, -1)} className="p-1 text-brand-maroon/40 hover:text-brand-maroon transition-colors"><Minus size={14} strokeWidth={3} /></button>
                     </div>
                   </div>
                 </motion.div>
@@ -177,20 +171,20 @@ export default function POSBilling() {
           </AnimatePresence>
         </div>
 
-        <div className="p-10 border-t border-iron/30 bg-base/40 relative z-10 backdrop-blur-sm">
-          <div className="space-y-3 mb-10">
-            <div className="flex justify-between text-[10px] font-black uppercase tracking-[0.2em] text-smoke">
-              <span>Subtotal</span>
-              <span className="font-mono text-ivory">₹{subtotal.toFixed(2)}</span>
+        <div className="p-10 border-t border-brand-maroon/10 bg-white/60 relative z-10">
+          <div className="space-y-4 mb-10">
+            <div className="flex justify-between text-[10px] font-black uppercase tracking-[0.3em] text-brand-maroon/40">
+              <span>Sub-Total</span>
+              <span className="font-mono text-brand-maroon">₹{subtotal.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between text-[10px] font-black uppercase tracking-[0.2em] text-smoke">
-              <span>Station GST (18%)</span>
-              <span className="font-mono text-ivory">₹{tax.toFixed(2)}</span>
+            <div className="flex justify-between text-[10px] font-black uppercase tracking-[0.3em] text-brand-maroon/40">
+              <span>Station VAT (18%)</span>
+              <span className="font-mono text-brand-maroon">₹{tax.toFixed(2)}</span>
             </div>
-            <div className="h-[1px] bg-iron/20 my-4" />
+            <div className="h-[1px] bg-brand-maroon/10 my-6" />
             <div className="flex justify-between items-end">
-              <span className="font-serif font-bold text-xl text-smoke uppercase tracking-tight">Net Bill</span>
-              <span className="text-gold font-mono font-black text-4xl drop-shadow-[0_0_15px_rgba(212,155,53,0.3)]">₹{total.toFixed(2)}</span>
+              <span className="font-heading font-black text-2xl text-brand-maroon uppercase tracking-tighter italic">Total Due</span>
+              <span className="text-brand-maroon font-mono font-black text-4xl">₹{total.toFixed(2)}</span>
             </div>
           </div>
 
@@ -198,17 +192,17 @@ export default function POSBilling() {
             <motion.button 
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="py-5 rounded-2xl bg-base border border-iron/50 text-[10px] font-black uppercase tracking-[0.2em] text-smoke flex items-center justify-center gap-3 hover:text-ivory hover:border-gold/30 transition-all"
+              className="py-5 rounded-sm bg-brand-ivory border-2 border-brand-maroon/20 text-[11px] font-black uppercase tracking-[0.3em] text-brand-maroon flex items-center justify-center gap-3 hover:bg-brand-maroon hover:text-brand-ivory hover:border-brand-maroon transition-all"
             >
-              <Send size={18} strokeWidth={2.5} />
-              KDS
+              <Send size={18} strokeWidth={3} />
+              DISPATCH
             </motion.button>
             <motion.button 
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="py-5 rounded-2xl bg-gold text-base text-[10px] font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3 gold-glow shadow-xl shadow-gold/20 active:scale-95 transition-all"
+              className="py-5 rounded-sm bg-brand-maroon text-brand-ivory text-[11px] font-black uppercase tracking-[0.3em] flex items-center justify-center gap-3 shadow-lg shadow-brand-maroon/20 transition-all border-2 border-brand-maroon"
             >
-              PAYMENT
+              SETTLE
               <ChevronRight size={18} strokeWidth={3} />
             </motion.button>
           </div>

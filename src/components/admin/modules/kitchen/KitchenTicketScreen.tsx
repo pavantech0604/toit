@@ -42,32 +42,38 @@ const MOCK_TICKETS: Ticket[] = [
 
 export default function KitchenTicketScreen() {
   return (
-    <div className="h-full flex flex-col gap-8">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 bg-gold/10 border border-gold/30 rounded-2xl flex items-center justify-center text-gold shadow-lg shadow-gold/10">
-            <ChefHat size={32} strokeWidth={2.5} />
+    <div className="h-full flex flex-col gap-10">
+      <div className="flex justify-between items-end bg-white/40 p-10 border border-brand-maroon/10 rounded-sm shadow-sm relative overflow-hidden">
+        {/* Parchment Overlay */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
+
+        <div className="flex items-center gap-6 relative z-10">
+          <div className="w-16 h-16 bg-brand-maroon text-brand-ivory rounded-sm flex items-center justify-center shadow-xl border-4 border-white">
+            <ChefHat size={36} strokeWidth={3} />
           </div>
           <div>
-            <h3 className="text-2xl font-serif font-bold text-ivory">Kitchen Display System</h3>
-            <p className="text-smoke text-sm font-sans tracking-tight uppercase">Back-of-House Station: Main Galley</p>
+            <h3 className="text-4xl font-heading font-black text-brand-maroon uppercase tracking-tighter italic leading-none">Kitchen Operations</h3>
+            <p className="text-brand-maroon/40 text-[10px] font-black uppercase tracking-[0.4em] mt-3 italic flex items-center gap-2">
+               <div className="w-4 h-[1px] bg-brand-maroon/20" />
+               BOH COMMAND • GALLEY-01
+            </p>
           </div>
         </div>
-        <div className="flex gap-4">
-           <div className="flex bg-base border border-iron/30 p-1.5 rounded-2xl">
+        <div className="flex gap-4 relative z-10">
+           <div className="flex bg-brand-maroon/5 border-2 border-brand-maroon/10 p-1.5 rounded-sm">
               {['All Stations', 'Starters', 'Mains', 'Taps'].map(station => (
                 <button 
                   key={station}
-                  className={`px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                    station === 'All Stations' ? 'bg-gold text-base gold-glow' : 'text-smoke hover:text-ivory'
+                  className={`px-8 py-3 rounded-sm text-[10px] font-black uppercase tracking-[0.2em] transition-all ${
+                    station === 'All Stations' ? 'bg-brand-maroon text-brand-ivory shadow-lg' : 'text-brand-maroon/40 hover:text-brand-maroon'
                   }`}
                 >
                   {station}
                 </button>
               ))}
            </div>
-           <button className="p-3 bg-surface border border-iron/30 rounded-2xl text-smoke hover:text-gold transition-colors">
-              <Timer size={22} />
+           <button className="w-14 h-14 bg-white/40 border-2 border-brand-maroon/10 rounded-sm flex items-center justify-center text-brand-maroon/40 hover:text-brand-maroon hover:border-brand-maroon transition-all">
+              <Timer size={24} />
            </button>
         </div>
       </div>
@@ -78,48 +84,48 @@ export default function KitchenTicketScreen() {
             <motion.div 
               key={ticket.id} 
               layout
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className={`bg-surface border-2 rounded-[3.5rem] flex flex-col overflow-hidden shadow-2xl relative ${
-                ticket.priority ? 'border-copper/40 ring-4 ring-copper/5' : 'border-iron/30'
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`bg-white/80 backdrop-blur-md border-4 rounded-sm flex flex-col overflow-hidden shadow-sm relative ${
+                ticket.priority ? 'border-brand-gold ring-8 ring-brand-gold/5' : 'border-brand-maroon/10'
               }`}
             >
               {/* Ticket Header */}
-              <div className={`p-8 border-b border-iron/10 flex justify-between items-center ${
-                ticket.status === 'ready' ? 'bg-emerald-500/5' : 
-                ticket.status === 'preparing' ? 'bg-gold/5' : 'bg-base/40'
+              <div className={`p-10 border-b border-brand-maroon/10 flex justify-between items-center ${
+                ticket.status === 'ready' ? 'bg-emerald-50' : 
+                ticket.status === 'preparing' ? 'bg-brand-gold/10' : 'bg-brand-maroon/5'
               }`}>
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-[1.5rem] bg-base border border-iron/30 flex items-center justify-center font-serif font-black text-3xl text-gold shadow-inner">
+                <div className="flex items-center gap-6">
+                  <div className="w-20 h-20 rounded-sm bg-brand-maroon text-brand-ivory border-4 border-white flex items-center justify-center font-heading font-black text-4xl shadow-xl">
                     {ticket.table}
                   </div>
                   <div>
-                    <h5 className="font-serif font-black text-xl text-ivory tracking-tighter uppercase mb-0.5">Order #{ticket.id}</h5>
-                    <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-smoke">
-                      <Clock size={12} className={ticket.priority ? 'text-copper' : 'text-gold'} /> 
-                      <span className={ticket.priority ? 'text-copper font-mono text-base' : ''}>{ticket.time}</span>
+                    <h5 className="font-heading font-black text-2xl text-brand-maroon tracking-tighter uppercase italic leading-none mb-2">Order #{ticket.id}</h5>
+                    <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-brand-maroon/40">
+                      <Clock size={12} className={ticket.priority ? 'text-brand-gold' : 'text-brand-gold/60'} /> 
+                      <span className={ticket.priority ? 'text-brand-gold font-mono text-base' : 'font-mono'}>{ticket.time} ELAPSED</span>
                     </div>
                   </div>
                 </div>
-                <button className="p-2 hover:bg-white/5 rounded-xl text-smoke"><MoreVertical size={20} /></button>
+                <button className="p-3 hover:bg-brand-maroon/5 rounded-full text-brand-maroon/20 hover:text-brand-maroon transition-all"><MoreVertical size={20} /></button>
               </div>
 
               {/* Items List */}
-              <div className="flex-1 p-8 space-y-6">
+              <div className="flex-1 p-10 space-y-8">
                 {ticket.items.map((item) => (
-                  <div key={item.id} className="space-y-2">
+                  <div key={item.id} className="space-y-3">
                     <div className="flex justify-between items-start">
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-xl bg-ivory/5 border border-iron/30 flex items-center justify-center font-black text-gold text-lg group-hover:bg-gold transition-all">
+                      <div className="flex items-center gap-6">
+                        <div className="w-12 h-12 rounded-sm bg-brand-maroon/5 border-2 border-brand-maroon/10 flex items-center justify-center font-black text-brand-maroon text-xl group-hover:bg-brand-maroon transition-all">
                           {item.qty}
                         </div>
-                        <span className="font-serif font-bold text-xl text-ivory tracking-tight">{item.name}</span>
+                        <span className="font-heading font-black text-2xl text-brand-maroon tracking-tighter uppercase italic">{item.name}</span>
                       </div>
-                      <div className="opacity-10"><Flame size={24} strokeWidth={3} /></div>
+                      <div className="opacity-[0.05]"><Flame size={32} strokeWidth={3} /></div>
                     </div>
                     {item.notes && (
-                      <div className="ml-14 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-copper bg-copper/5 px-3 py-1.5 rounded-lg border border-copper/10 w-fit">
-                        <AlertCircle size={12} /> {item.notes}
+                      <div className="ml-18 flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-brand-gold bg-brand-gold/5 px-4 py-2 rounded-sm border border-brand-gold/10 w-fit italic">
+                        <AlertCircle size={14} /> COMMAND: {item.notes}
                       </div>
                     )}
                   </div>
@@ -127,36 +133,36 @@ export default function KitchenTicketScreen() {
               </div>
 
               {/* Action Buttons */}
-              <div className="p-8 border-t border-iron/10 bg-base/20">
+              <div className="p-10 border-t border-brand-maroon/10 bg-brand-maroon/5">
                 <div className="flex gap-4">
                   {ticket.status === 'ready' ? (
                     <motion.button 
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="flex-1 py-5 rounded-3xl bg-emerald-500 text-base text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-emerald-500/20"
+                      className="flex-1 py-6 rounded-sm bg-brand-gold text-brand-maroon text-[11px] font-black uppercase tracking-[0.4em] shadow-xl shadow-brand-gold/20 border-2 border-brand-gold"
                     >
-                      BUMP ORDER
+                      BUMP LEDGER
                     </motion.button>
                   ) : (
                     <div className="flex flex-1 gap-4">
                       <motion.button 
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="p-5 rounded-3xl bg-base border border-iron/30 text-smoke hover:text-ivory transition-all"
+                        className="p-6 rounded-sm bg-brand-ivory border-2 border-brand-maroon/10 text-brand-maroon/40 hover:text-brand-maroon hover:border-brand-maroon transition-all"
                       >
-                         <AlertCircle size={24} />
+                         <AlertCircle size={24} strokeWidth={3} />
                       </motion.button>
                       <motion.button 
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className={`flex-1 flex items-center justify-center gap-4 py-5 rounded-3xl text-[10px] font-black uppercase tracking-[0.2em] transition-all ${
+                        className={`flex-1 flex items-center justify-center gap-4 py-6 rounded-sm text-[11px] font-black uppercase tracking-[0.3em] transition-all border-2 shadow-lg ${
                           ticket.status === 'preparing' 
-                            ? 'bg-status-success text-ivory shadow-lg shadow-status-success/20' 
-                            : 'bg-gold text-base gold-glow'
+                            ? 'bg-brand-maroon text-brand-ivory border-brand-maroon' 
+                            : 'bg-brand-gold text-brand-maroon border-brand-gold'
                         }`}
                       >
-                         {ticket.status === 'preparing' ? <CheckCircle2 size={18} /> : null}
-                         {ticket.status === 'preparing' ? 'READY TO SERVE' : 'START PREPARING'}
+                         {ticket.status === 'preparing' ? <CheckCircle2 size={18} strokeWidth={3} /> : null}
+                         {ticket.status === 'preparing' ? 'DISPATCH READY' : 'INITIATE ORDER'}
                       </motion.button>
                     </div>
                   )}

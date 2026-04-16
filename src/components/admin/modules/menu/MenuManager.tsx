@@ -59,55 +59,57 @@ export default function MenuManager() {
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="space-y-6"
+      className="space-y-10"
     >
-      <div className="flex justify-between items-center">
-        <div>
-          <h3 className="text-2xl font-serif font-bold text-ivory">Menu Repository</h3>
-          <p className="text-smoke text-sm">Managing live tap lists and kitchen inventory</p>
+      <div className="flex justify-between items-end bg-white/40 p-10 border border-brand-maroon/10 rounded-sm shadow-sm relative overflow-hidden">
+        {/* Parchment Overlay */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
+
+        <div className="relative z-10">
+          <h3 className="text-4xl font-heading font-black text-brand-maroon uppercase tracking-tighter italic">Menu Repository</h3>
+          <p className="text-brand-maroon/40 text-[10px] font-black uppercase tracking-[0.4em] mt-3 italic flex items-center gap-2">
+            <div className="w-4 h-[1px] bg-brand-maroon/20" />
+            Live Tap List & Industrial Inventory
+          </p>
         </div>
-        <div className="flex gap-4">
-          <button className="bg-base border border-iron/30 text-smoke px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:text-ivory hover:border-ivory/30 transition-all">
-            <Settings2 size={16} />
+        <div className="flex gap-4 relative z-10">
+          <button className="bg-brand-maroon/5 border-2 border-brand-maroon/10 text-brand-maroon/60 px-8 py-4 rounded-sm text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 hover:text-brand-maroon hover:border-brand-maroon transition-all">
+            <Settings2 size={16} strokeWidth={3} />
             Bulk Actions
           </button>
           <motion.button 
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="bg-gold text-base px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 gold-glow shadow-lg shadow-gold/10"
+            className="bg-brand-maroon text-brand-ivory px-8 py-4 rounded-sm text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3 shadow-xl shadow-brand-maroon/20 border-2 border-brand-maroon"
           >
-            <Plus size={16} strokeWidth={3} />
-            Add To Menu
+            <Plus size={18} strokeWidth={3} />
+            New Entry
           </motion.button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Categories Sidebar */}
-        <div className="space-y-3">
-          <h4 className="text-[10px] font-black text-smoke uppercase tracking-[0.2em] mb-4 ml-2">Categories</h4>
+        <div className="space-y-4">
+          <div className="flex items-center gap-3 mb-6 ml-2">
+            <div className="h-[2px] w-4 bg-brand-gold" />
+            <h4 className="text-[10px] font-black text-brand-maroon/40 uppercase tracking-[0.3em]">Sections</h4>
+          </div>
           {CATEGORIES.map(cat => (
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`w-full flex items-center gap-3 px-4 py-4 rounded-2xl transition-all relative overflow-hidden group border ${
+              className={`w-full flex items-center gap-4 px-6 py-5 rounded-sm transition-all relative overflow-hidden group border-2 ${
                 activeCategory === cat.id 
-                  ? 'bg-gold text-base border-gold shadow-xl shadow-gold/10' 
-                  : 'bg-surface text-smoke border-iron/30 hover:border-gold/30 hover:text-ivory'
+                  ? 'bg-brand-maroon text-brand-ivory border-brand-maroon shadow-lg translate-x-1' 
+                  : 'bg-white/40 text-brand-maroon/60 border-brand-maroon/5 hover:border-brand-maroon/20 hover:text-brand-maroon'
               }`}
             >
-              <cat.icon size={18} strokeWidth={activeCategory === cat.id ? 2.5 : 2} />
-              <span className="font-bold text-xs uppercase tracking-tight">{cat.label}</span>
-              <span className={`ml-auto font-mono text-[10px] ${activeCategory === cat.id ? 'opacity-80' : 'text-zinc-600'}`}>
+              <cat.icon size={18} strokeWidth={3} />
+              <span className="font-black text-[11px] uppercase tracking-[0.2em]">{cat.label}</span>
+              <span className={`ml-auto font-mono text-[10px] font-black ${activeCategory === cat.id ? 'text-brand-gold' : 'text-brand-maroon/20'}`}>
                 {items.filter(i => cat.id === 'all' || i.category === cat.id).length.toString().padStart(2, '0')}
               </span>
-              {activeCategory === cat.id && (
-                <motion.div 
-                  layoutId="cat-active"
-                  className="absolute inset-0 bg-gold -z-10"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                />
-              )}
             </button>
           ))}
         </div>
@@ -125,58 +127,60 @@ export default function MenuManager() {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <AnimatePresence>
               {filteredItems.map(item => (
                 <motion.div 
                   key={item.id} 
                   layout
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  className={`bg-surface border p-6 rounded-[2rem] transition-all relative overflow-hidden group ${
-                    item.inStock ? 'border-iron/30' : 'border-copper/30 bg-copper/[0.02]'
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  className={`bg-white/80 backdrop-blur-md border-2 p-8 rounded-sm transition-all relative overflow-hidden group shadow-sm hover:shadow-md ${
+                    item.inStock ? 'border-brand-maroon/5' : 'border-brand-gold/30 bg-brand-gold/5'
                   }`}
                 >
-                  <div className="flex justify-between items-start mb-4 relative z-10">
+                   {/* Ledger texture */}
+                   <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/notebook.png')]" />
+
+                  <div className="flex justify-between items-start mb-6 relative z-10">
                     <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-black uppercase tracking-[0.15em] text-smoke group-hover:text-gold transition-colors">{item.category}</span>
+                      <div className="flex items-center gap-3">
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-maroon/30 group-hover:text-brand-gold transition-colors">{item.category}</span>
                         {!item.inStock && (
-                          <span className="flex items-center gap-1 text-[8px] font-black uppercase bg-copper/10 text-copper px-2 py-0.5 rounded border border-copper/20">
-                            <AlertTriangle size={8} /> Sold Out
+                          <span className="flex items-center gap-2 text-[8px] font-black uppercase bg-brand-gold text-brand-maroon px-2 py-1 rounded-sm shadow-sm">
+                            <AlertTriangle size={10} strokeWidth={3} /> Depleted
                           </span>
                         )}
                       </div>
-                      <h4 className="font-serif font-bold text-xl mt-1 text-ivory tracking-tight">{item.name}</h4>
+                      <h4 className="font-heading font-black text-2xl mt-2 text-brand-maroon tracking-tighter uppercase italic leading-none">{item.name}</h4>
                     </div>
                     <div className="text-right">
-                      <div className="text-gold font-mono font-black text-lg">₹{item.price}</div>
+                      <div className="text-brand-maroon font-mono font-black text-xl tracking-tighter italic">₹{item.price}</div>
                       <button 
                         onClick={() => toggleStock(item.id)}
-                        className={`mt-3 flex items-center gap-2 text-[8px] font-black uppercase tracking-widest transition-all px-2 py-1 rounded-full border ${
+                        className={`mt-4 flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em] transition-all px-3 py-1.5 rounded-sm border-2 ${
                           item.inStock 
-                            ? 'text-emerald-500 border-emerald-500/20 bg-emerald-500/5' 
-                            : 'text-copper border-copper/20 bg-copper/5'
+                            ? 'text-emerald-700 border-emerald-700/20 bg-emerald-50' 
+                            : 'text-brand-maroon border-brand-maroon/20 bg-brand-maroon/5'
                         }`}
                       >
-                        {item.inStock ? <ToggleRight size={18} /> : <ToggleLeft size={18} />}
-                        {item.inStock ? 'Live' : 'Hidden'}
+                        {item.inStock ? <ToggleRight size={18} strokeWidth={3} /> : <ToggleLeft size={18} strokeWidth={3} />}
+                        {item.inStock ? 'AVAILABLE' : 'OFF MENU'}
                       </button>
                     </div>
                   </div>
-                  <p className="text-xs text-smoke font-sans leading-relaxed line-clamp-2 pr-8">{item.description}</p>
+                  <p className="text-[11px] text-brand-maroon/60 font-black uppercase tracking-wider leading-relaxed line-clamp-2 pr-12 italic">"{item.description}"</p>
                   
-                  <div className="mt-6 pt-5 border-t border-iron/10 flex gap-3 relative z-10">
-                    <button className="flex-1 py-2.5 rounded-xl bg-base border border-iron/30 text-[10px] font-black uppercase tracking-widest text-smoke hover:text-ivory hover:border-ivory/20 transition-all">Edit Specs</button>
-                    <button className="px-3 rounded-xl bg-base border border-iron/30 text-smoke hover:text-copper transition-all">
+                  <div className="mt-8 pt-6 border-t border-brand-maroon/10 flex gap-4 relative z-10">
+                    <button className="flex-1 py-3 rounded-sm bg-brand-maroon/5 border border-brand-maroon/10 text-[10px] font-black uppercase tracking-[0.3em] text-brand-maroon/40 hover:text-brand-maroon hover:border-brand-maroon transition-all italic">Edit Registry</button>
+                    <button className="w-10 h-10 rounded-full bg-brand-maroon/5 border border-brand-maroon/10 flex items-center justify-center text-brand-maroon/20 hover:text-brand-maroon hover:border-brand-maroon transition-all">
                       <Plus size={14} className="rotate-45" />
                     </button>
                   </div>
 
-                  {/* Aesthetic Background flourish */}
-                  <div className="absolute -bottom-4 -right-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity pointer-events-none">
-                     {item.category === 'Brews' ? <Beer size={120} /> : item.category === 'Pizzas' ? <Pizza size={120} /> : <Flame size={120} />}
+                  <div className="absolute -bottom-6 -right-6 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-700 pointer-events-none group-hover:scale-110">
+                     {item.category === 'Brews' ? <Beer size={140} /> : item.category === 'Pizzas' ? <Pizza size={140} /> : <Flame size={140} />}
                   </div>
                 </motion.div>
               ))}

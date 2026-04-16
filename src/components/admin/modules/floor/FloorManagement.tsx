@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { Trash2, Users, Clock, 
    
    
-  Map as MapIcon, 
-  Layers, 
   Info,
   Calendar,
   Beer,
@@ -38,180 +36,192 @@ export default function FloorManagement() {
 
   const getStatusColor = (status: TableStatus) => {
     switch (status) {
-      case 'available': return 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20';
-      case 'occupied': return 'bg-copper/10 text-copper border-copper/20';
-      case 'reserved': return 'bg-gold/10 text-gold border-gold/20';
-      case 'dirty': return 'bg-rose-500/10 text-rose-500 border-rose-500/20';
+      case 'available': return 'bg-brand-maroon/5 text-brand-maroon/40 border-brand-maroon/10';
+      case 'occupied': return 'bg-brand-maroon text-brand-ivory border-brand-maroon shadow-lg';
+      case 'reserved': return 'bg-brand-gold text-brand-maroon border-brand-gold shadow-md';
+      case 'dirty': return 'bg-brand-maroon/5 text-brand-maroon/20 border-brand-maroon/5 border-dashed';
     }
   };
 
   return (
     <div className="h-full flex gap-8 overflow-hidden">
-      <div className="flex-1 flex flex-col gap-8">
-        <div className="flex justify-between items-center">
-          <div>
-            <h3 className="text-2xl font-serif font-bold text-ivory">Floor Blueprint</h3>
-            <p className="text-smoke text-sm font-sans tracking-tight">Real-time spatial distribution and table velocity</p>
+      <div className="flex-1 flex flex-col gap-10">
+        <div className="flex justify-between items-end bg-white/40 p-10 border border-brand-maroon/10 rounded-sm shadow-sm relative overflow-hidden">
+          {/* Parchment Overlay */}
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
+
+          <div className="relative z-10">
+            <h3 className="text-4xl font-heading font-black text-brand-maroon uppercase tracking-tighter italic leading-none">Bureau Map</h3>
+            <p className="text-brand-maroon/40 text-[10px] font-black uppercase tracking-[0.4em] mt-3 italic flex items-center gap-2">
+              <div className="w-4 h-[1px] bg-brand-maroon/20" />
+              Spatial Hub & Station Persistence
+            </p>
           </div>
-          <div className="flex gap-4">
-            <div className="flex bg-base border border-iron/30 p-1 rounded-2xl">
+          <div className="flex gap-6 relative z-10">
+            <div className="flex bg-brand-maroon/5 border-2 border-brand-maroon/10 p-1 rounded-sm backdrop-blur-sm">
               {['Ground Floor', 'The Deck', 'VIP Lounge'].map(floor => (
                 <button 
                   key={floor}
                   onClick={() => setActiveFloor(floor)}
-                  className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                    activeFloor === floor ? 'bg-gold text-base gold-glow shadow-lg shadow-gold/10' : 'text-smoke hover:bg-white/5'
+                  className={`px-8 py-3 rounded-sm text-[10px] font-black uppercase tracking-[0.2em] transition-all italic ${
+                    activeFloor === floor ? 'bg-brand-maroon text-brand-ivory shadow-xl' : 'text-brand-maroon/40 hover:bg-brand-maroon/5'
                   }`}
                 >
                   {floor}
                 </button>
               ))}
             </div>
-            <button className="p-3 bg-surface border border-iron/30 rounded-2xl text-smoke hover:text-gold transition-colors">
-               <Layers size={20} />
-            </button>
           </div>
         </div>
 
         {/* Legend */}
-        <div className="flex gap-8 items-center px-6 py-4 bg-surface/50 border border-iron/10 rounded-3xl">
+        <div className="flex gap-10 items-center px-10 py-6 bg-white/40 border border-brand-maroon/10 rounded-sm italic">
           {[
-            { label: 'Available', color: 'bg-emerald-500' },
-            { label: 'Occupied', color: 'bg-copper' },
-            { label: 'Reserved', color: 'bg-gold' },
-            { label: 'Dirty', color: 'bg-rose-500' },
+            { label: 'OPEN PERSISTENCE', color: 'bg-brand-maroon/10' },
+            { label: 'ACTIVE STATION', color: 'bg-brand-maroon' },
+            { label: 'RESERVED NODE', color: 'bg-brand-gold' },
+            { label: 'ARCHIVE / DIRTY', color: 'bg-brand-maroon/5 border-2 border-brand-maroon/10' },
           ].map(item => (
-            <div key={item.label} className="flex items-center gap-3">
-              <div className={`w-2.5 h-2.5 rounded-full ${item.color} shadow-[0_0_10px_rgba(0,0,0,0.5)]`} />
-              <span className="text-[10px] font-black uppercase tracking-widest text-smoke">{item.label}</span>
+            <div key={item.label} className="flex items-center gap-4">
+              <div className={`w-3 h-3 rounded-full ${item.color} shadow-sm`} />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-maroon/40">{item.label}</span>
             </div>
           ))}
         </div>
 
         {/* Map Area */}
-        <div className="flex-1 bg-base/50 border border-iron/30 rounded-[3rem] p-12 relative overflow-hidden group/map shadow-inner">
+        <div className="flex-1 bg-white/20 border-2 border-brand-maroon/5 rounded-sm p-16 relative overflow-hidden group/map shadow-inner">
+           {/* Blueprint Grid */}
+           <div className="absolute inset-0 opacity-[0.05] pointer-events-none" 
+                style={{backgroundImage: 'radial-gradient(var(--brand-maroon) 1px, transparent 1px)', backgroundSize: '30px 30px'}} />
+
           <div className="grid grid-cols-4 gap-12 relative z-10">
             {TABLES.map(table => (
               <motion.button
                 key={table.id}
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.05, y: -4 }}
+                whileTap={{ scale: 1 }}
                 onClick={() => setSelectedTable(table)}
-                className={`aspect-square rounded-[2.5rem] p-6 border-2 flex flex-col items-center justify-center gap-3 transition-all relative ${
+                className={`aspect-square rounded-sm p-8 border-4 flex flex-col items-center justify-center gap-4 transition-all relative shadow-xl ${
                   selectedTable?.id === table.id 
-                    ? 'ring-4 ring-gold/20 border-gold bg-gold/5' 
-                    : `${getStatusColor(table.status)} hover:bg-white/5`
+                    ? 'border-brand-gold bg-brand-maroon shadow-brand-maroon/20 ring-8 ring-brand-gold/10' 
+                    : `${getStatusColor(table.status)} hover:brightness-110`
                 }`}
               >
-                <div className="absolute top-4 left-4 text-[10px] font-black opacity-50">{table.name}</div>
-                <div className={`w-16 h-16 rounded-full flex items-center justify-center border transition-all ${
-                   table.status === 'occupied' ? 'bg-copper/20 border-copper/30' : 
-                   table.status === 'reserved' ? 'bg-gold/20 border-gold/30 gold-glow' :
-                   'bg-base/30 border-iron/30'
+                <div className={`absolute top-4 left-4 text-[10px] font-black uppercase italic ${selectedTable?.id === table.id ? 'text-brand-gold' : 'opacity-40'}`}>{table.name}</div>
+                <div className={`w-16 h-16 rounded-sm flex items-center justify-center border-2 transition-all duration-500 italic ${
+                   table.status === 'occupied' ? 'bg-brand-ivory/10 border-brand-ivory/20' : 
+                   table.status === 'reserved' ? 'bg-brand-maroon/10 border-brand-maroon/20' :
+                   'bg-white/20 border-brand-maroon/5'
                 }`}>
-                  {table.status === 'occupied' ? <Users size={28} /> : table.status === 'reserved' ? <Calendar size={28} /> : <Beer size={28} className="opacity-40" />}
+                  {table.status === 'occupied' ? <Users size={32} strokeWidth={selectedTable?.id === table.id ? 4 : 2} className={selectedTable?.id === table.id ? 'text-brand-gold' : ''} /> : 
+                   table.status === 'reserved' ? <Calendar size={32} strokeWidth={selectedTable?.id === table.id ? 4 : 2} className={selectedTable?.id === table.id ? 'text-brand-gold' : ''} /> : 
+                   <Beer size={32} className="opacity-10" />}
                 </div>
-                <div className="text-[10px] font-black uppercase tracking-widest">{table.seats} Seats</div>
+                <div className={`text-[9px] font-black uppercase tracking-[0.3em] italic ${selectedTable?.id === table.id ? 'text-brand-gold/40' : 'opacity-40'}`}>{table.seats} UNITS</div>
                 {table.guest && (
-                  <div className="mt-2 text-[8px] font-black uppercase tracking-[0.2em] bg-black/20 px-3 py-1 rounded-full border border-white/5">{table.guest}</div>
+                  <div className={`mt-4 text-[8px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm border italic ${selectedTable?.id === table.id ? 'bg-brand-gold text-brand-maroon border-brand-gold' : 'bg-brand-maroon/5 border-brand-maroon/5'}`}>{table.guest}</div>
                 )}
               </motion.button>
             ))}
-          </div>
-
-          {/* Map Decorative Overlay */}
-          <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
-             <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
-             <div className="absolute bottom-10 right-10 scale-150 rotate-12"><MapIcon size={400} /></div>
           </div>
         </div>
       </div>
 
       {/* Detail Sidebar */}
-      <div className="w-[380px] flex flex-col gap-6">
+      <div className="w-[420px] flex flex-col gap-8">
         <AnimatePresence mode="wait">
           {selectedTable ? (
             <motion.div 
               key={selectedTable.id}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              className="bg-surface border border-iron/30 rounded-[3rem] p-10 flex-1 flex flex-col shadow-2xl relative overflow-hidden"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              className="bg-white/80 backdrop-blur-md border border-brand-maroon/10 rounded-sm p-12 flex-1 flex flex-col shadow-sm relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 p-8">
-                 <button onClick={() => setSelectedTable(null)} className="text-smoke hover:text-ivory transition-colors"><MoreVertical size={24} /></button>
+              {/* Ledger texture */}
+              <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/notebook.png')]" />
+
+              <div className="absolute top-0 right-0 p-10 relative z-10">
+                 <button onClick={() => setSelectedTable(null)} className="text-brand-maroon/20 hover:text-brand-maroon transition-all"><MoreVertical size={28} strokeWidth={3} /></button>
               </div>
 
-              <div className="mb-10">
-                <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border mb-6 ${getStatusColor(selectedTable.status)}`}>
-                   {selectedTable.status}
+              <div className="mb-12 relative z-10">
+                <div className={`inline-flex items-center gap-3 px-6 py-2 rounded-sm text-[10px] font-black uppercase tracking-[0.3em] border-2 mb-8 italic shadow-sm ${getStatusColor(selectedTable.status)}`}>
+                   {selectedTable.status} PERSISTENCE
                 </div>
-                <h4 className="text-5xl font-serif font-black text-ivory tracking-tighter mb-1">{selectedTable.name}</h4>
-                <p className="text-smoke text-sm font-sans underline decoration-gold/30 underline-offset-8 decoration-2">Premium Seating • Station 01</p>
+                <h4 className="text-6xl font-heading font-black text-brand-maroon tracking-tighter uppercase italic leading-none mb-2">{selectedTable.name}</h4>
+                <p className="text-brand-maroon/40 text-[11px] font-black uppercase tracking-[0.4em] italic flex items-center gap-4">
+                  <div className="w-8 h-[1px] bg-brand-maroon/20" />
+                  STATION COMMAND 01
+                </p>
               </div>
 
-              <div className="space-y-8 flex-1">
+              <div className="space-y-10 flex-1 relative z-10">
                 {selectedTable.guest ? (
-                  <div className="space-y-6">
-                    <div className="p-6 bg-base/50 border border-iron/30 rounded-3xl relative overflow-hidden group">
-                      <p className="text-[10px] font-black text-smoke uppercase tracking-[0.2em] mb-4">Current Occupant</p>
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-gold/10 border border-gold/30 flex items-center justify-center text-gold font-serif font-bold text-xl">{selectedTable.guest.charAt(0)}</div>
+                  <div className="space-y-8">
+                    <div className="p-8 bg-brand-maroon text-brand-ivory border-2 border-brand-maroon rounded-sm relative overflow-hidden group shadow-xl italic">
+                       {/* Texture */}
+                       <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/notebook.png')]" />
+                      
+                      <p className="text-[9px] font-black text-brand-gold uppercase tracking-[0.4em] mb-6 italic opacity-60">REGISTRY GUEST</p>
+                      <div className="flex items-center gap-6 relative z-10">
+                        <div className="w-16 h-16 rounded-sm bg-brand-gold text-brand-maroon flex items-center justify-center font-heading font-black text-3xl border-4 border-white shadow-xl italic">{selectedTable.guest.charAt(0)}</div>
                         <div>
-                          <p className="font-serif font-bold text-lg text-ivory">{selectedTable.guest}</p>
-                          <p className="text-[10px] text-smoke uppercase font-black tracking-widest">LOYALTY TIER: VIP</p>
+                          <p className="font-heading font-black text-3xl tracking-tighter uppercase italic leading-none mb-1">{selectedTable.guest}</p>
+                          <p className="text-[10px] text-brand-ivory/40 uppercase font-black tracking-[0.3em] italic">LOYALTY RANK: ELITE VIP</p>
                         </div>
                       </div>
-                      <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity"><Info size={16} /></div>
+                      <div className="absolute top-4 right-4 text-brand-gold/20 group-hover:text-brand-gold transition-colors duration-500"><Info size={20} strokeWidth={3} /></div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="p-5 bg-base/30 border border-iron/10 rounded-2xl">
-                         <Clock size={20} className="text-gold mb-3" />
-                         <p className="text-[9px] font-black text-smoke uppercase tracking-widest leading-none">Elapsed Time</p>
-                         <p className="text-xl font-serif font-bold text-ivory mt-1">{selectedTable.time}</p>
+                    <div className="grid grid-cols-2 gap-6">
+                      <div className="p-8 bg-brand-maroon/5 border-2 border-brand-maroon/5 rounded-sm italic hover:border-brand-maroon/20 transition-all">
+                         <Clock size={24} className="text-brand-gold mb-4" strokeWidth={3} />
+                         <p className="text-[9px] font-black text-brand-maroon/40 uppercase tracking-[0.4em] italic leading-none mb-2">Duration</p>
+                         <p className="text-2xl font-heading font-black text-brand-maroon uppercase tracking-tighter italic">{selectedTable.time}</p>
                       </div>
-                      <div className="p-5 bg-base/30 border border-iron/10 rounded-2xl">
-                         <Users size={20} className="text-copper mb-3" />
-                         <p className="text-[9px] font-black text-smoke uppercase tracking-widest leading-none">Party Size</p>
-                         <p className="text-xl font-serif font-bold text-ivory mt-1">{selectedTable.seats} Seats</p>
+                      <div className="p-8 bg-brand-maroon/5 border-2 border-brand-maroon/5 rounded-sm italic hover:border-brand-maroon/20 transition-all">
+                         <Users size={24} className="text-brand-maroon/60 mb-4" strokeWidth={3} />
+                         <p className="text-[9px] font-black text-brand-maroon/40 uppercase tracking-[0.4em] italic leading-none mb-2">Units</p>
+                         <p className="text-2xl font-heading font-black text-brand-maroon uppercase tracking-tighter italic">{selectedTable.seats} Seats</p>
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <div className="flex-1 flex flex-col items-center justify-center text-center space-y-6 opacity-40 py-20">
-                     <div className="w-20 h-20 rounded-full border-2 border-dashed border-iron/50 flex items-center justify-center"><Users size={32} /></div>
-                     <p className="text-xs font-black uppercase tracking-[0.2em] max-w-[200px] leading-loose">Select a guest or reserve this station</p>
+                  <div className="flex-1 flex flex-col items-center justify-center text-center space-y-10 opacity-40 py-24 italic">
+                     <div className="w-24 h-24 rounded-full border-4 border-dashed border-brand-maroon/10 flex items-center justify-center"><Users size={40} className="text-brand-maroon" /></div>
+                     <p className="text-[10px] font-black uppercase tracking-[0.4em] max-w-[200px] leading-loose text-brand-maroon">Awaiting Guest Allocation or Registry Entry</p>
                   </div>
                 )}
               </div>
 
-              <div className="space-y-3 pt-10 mt-auto border-t border-iron/10">
+              <div className="space-y-4 pt-10 mt-auto border-t border-brand-maroon/10 relative z-10 italic">
                 {selectedTable.status === 'dirty' ? (
                   <motion.button 
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full py-5 rounded-2xl bg-emerald-500 text-base text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-emerald-500/20"
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full py-6 rounded-sm bg-emerald-700 text-brand-ivory text-[11px] font-black uppercase tracking-[0.4em] shadow-xl border-2 border-emerald-800"
                   >
-                    CLEAN & OPEN
+                    FORGE STATION OPEN
                   </motion.button>
                 ) : (
                   <div className="grid grid-cols-2 gap-4">
-                    <motion.button whileTap={{ scale: 0.95 }} className="py-4 rounded-2xl bg-base border border-iron/50 text-[9px] font-black uppercase tracking-[0.2em] text-smoke flex items-center justify-center gap-2 hover:text-ivory">
-                      <Trash2 size={16} /> VOID
+                    <motion.button whileTap={{ scale: 0.98 }} className="py-5 rounded-sm bg-brand-maroon/5 border-2 border-brand-maroon/5 text-[10px] font-black uppercase tracking-[0.3em] text-brand-maroon/40 flex items-center justify-center gap-3 hover:text-brand-maroon hover:border-brand-maroon transition-all italic">
+                      <Trash2 size={18} strokeWidth={3} /> VOID
                     </motion.button>
-                    <motion.button whileTap={{ scale: 0.95 }} className="py-4 rounded-2xl bg-gold text-base text-[9px] font-black uppercase tracking-[0.2em] flex items-center justify-center gap-2 gold-glow shadow-lg shadow-gold/20">
-                      <CheckCircle2 size={16} strokeWidth={3} /> ACTIONS
+                    <motion.button whileTap={{ scale: 0.98 }} className="py-5 rounded-sm bg-brand-maroon text-brand-ivory text-[10px] font-black uppercase tracking-[0.3em] flex items-center justify-center gap-3 shadow-xl border-2 border-brand-maroon italic hover:bg-brand-gold transition-all">
+                      <CheckCircle2 size={18} strokeWidth={4} /> HUB ACTIONS
                     </motion.button>
                   </div>
                 )}
               </div>
             </motion.div>
           ) : (
-             <div className="bg-surface/30 border border-iron/10 border-dashed rounded-[3rem] p-10 flex-1 flex flex-col items-center justify-center text-center space-y-8 opacity-50">
-                <div className="w-32 h-32 rounded-full bg-base border border-iron/30 flex items-center justify-center text-smoke"><Info size={48} strokeWidth={1} /></div>
+             <div className="bg-white/40 border-4 border-brand-maroon/5 border-dashed rounded-sm p-12 flex-1 flex flex-col items-center justify-center text-center space-y-10 opacity-50 italic">
+                <div className="w-36 h-36 rounded-full bg-white border-2 border-brand-maroon/10 flex items-center justify-center text-brand-maroon/10 shadow-inner"><Info size={64} strokeWidth={1} /></div>
                 <div>
-                  <h5 className="font-serif font-bold text-2xl text-ivory mb-2">Station Selector</h5>
-                  <p className="text-xs font-sans text-smoke max-w-[240px] leading-relaxed">Select a table on the map to manage status or view guest intelligence.</p>
+                  <h5 className="font-heading font-black text-3xl text-brand-maroon uppercase tracking-tighter mb-3 leading-none italic">Station Selector</h5>
+                  <p className="text-[10px] font-black text-brand-maroon/40 uppercase tracking-[0.3em] max-w-[240px] leading-loose">Interact with the persistent hub nodes to manage spatial velocity.</p>
                 </div>
              </div>
           )}

@@ -23,19 +23,22 @@ export default function PaymentSettlement() {
 
   if (isSettled) {
     return (
-      <div className="h-full flex flex-col items-center justify-center">
+      <div className="h-full flex flex-col items-center justify-center p-10 relative overflow-hidden">
+        {/* Parchment Overlay */}
+        <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
+
         <motion.div 
-          initial={{ scale: 0.5, opacity: 0 }}
+          initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="w-40 h-40 bg-status-success/10 border-4 border-status-success/30 rounded-full flex items-center justify-center text-status-success mb-10 shadow-[0_0_50px_rgba(74,93,35,0.2)]"
+          className="w-48 h-48 bg-brand-maroon text-brand-ivory rounded-sm flex items-center justify-center shadow-2xl border-8 border-white mb-12 relative z-10"
         >
-          <CheckCircle2 size={80} strokeWidth={2.5} className="animate-pulse" />
+          <CheckCircle2 size={96} strokeWidth={3} className="drop-shadow-lg" />
         </motion.div>
         <motion.h3 
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-5xl font-serif font-black text-ivory mb-4 tracking-tight"
+          className="text-6xl font-heading font-black text-brand-maroon mb-4 tracking-tighter uppercase italic leading-none relative z-10"
         >
           Transaction Secured
         </motion.h3>
@@ -43,32 +46,34 @@ export default function PaymentSettlement() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-smoke text-sm font-black uppercase tracking-[0.3em] mb-12 opacity-60"
+          className="text-brand-maroon/40 text-[11px] font-black uppercase tracking-[0.5em] mb-16 italic relative z-10 flex items-center gap-4"
         >
-          AUTH CODE: #A829-X102
+           <div className="w-8 h-[1px] bg-brand-maroon/20" />
+           AUTH CODE: G-882-XQ102
+           <div className="w-8 h-[1px] bg-brand-maroon/20" />
         </motion.p>
         
-        <div className="flex gap-6">
+        <div className="flex gap-8 relative z-10">
           <motion.button 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-10 py-5 rounded-[2rem] bg-base border-2 border-iron/30 font-black uppercase tracking-widest text-[10px] flex items-center gap-3 hover:text-ivory hover:border-ivory/50 transition-all text-smoke"
+            className="px-12 py-6 rounded-sm bg-white/40 border-2 border-brand-maroon/10 font-black uppercase tracking-[0.3em] text-[11px] text-brand-maroon/60 flex items-center gap-4 hover:text-brand-maroon hover:border-brand-maroon transition-all italic shadow-sm"
           >
-            <Printer size={22} /> PRINT RECEIPT
+            <Printer size={24} strokeWidth={3} /> PRINT REGISTRY RECEIPT
           </motion.button>
           <motion.button 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsSettled(false)}
-            className="px-10 py-5 rounded-[2rem] bg-gold text-base font-black uppercase tracking-widest text-[10px] flex items-center gap-3 hover:brightness-110 active:scale-95 transition-all gold-glow shadow-xl shadow-gold/20"
+            className="px-12 py-6 rounded-sm bg-brand-maroon text-brand-ivory font-black uppercase tracking-[0.3em] text-[11px] flex items-center gap-4 shadow-2xl border-2 border-brand-maroon transition-all"
           >
-            NEW ORDER <ChevronRight size={22} strokeWidth={3} />
+            NEW ENTRY <ChevronRight size={24} strokeWidth={4} />
           </motion.button>
         </div>
 
         {/* Backdrop Decorative */}
-        <div className="fixed inset-0 pointer-events-none opacity-[0.02] flex items-center justify-center">
-           <Beer size={800} strokeWidth={0.5} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] pointer-events-none group-hover:scale-110 transition-all duration-1000">
+           <Beer size={800} strokeWidth={1} />
         </div>
       </div>
     );
@@ -80,103 +85,108 @@ export default function PaymentSettlement() {
       animate={{ opacity: 1 }}
       className="h-full max-w-6xl mx-auto flex flex-col gap-12 py-6 overflow-hidden"
     >
-      <div className="text-center space-y-4">
-        <h3 className="text-[10px] font-black text-smoke uppercase tracking-[0.4em] opacity-60">Settlement in progress • Station 01</h3>
+      <div className="text-center space-y-6">
+        <h3 className="text-[11px] font-black text-brand-maroon/30 uppercase tracking-[0.5em] italic">Settlement in progress • Command Station 01</h3>
         <motion.p 
-          initial={{ scale: 0.9, opacity: 0 }}
+          initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="text-8xl font-serif font-black text-gold drop-shadow-[0_0_30px_rgba(212,155,53,0.2)] tracking-tighter"
+          className="text-9xl font-heading font-black text-brand-maroon tracking-tighter uppercase italic drop-shadow-sm leading-none"
         >
           ₹{totalAmount.toLocaleString()}
         </motion.p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 px-10">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 px-10">
         {[
-          { id: 'upi', label: 'UPI / Static QR', icon: Smartphone, color: 'text-indigo-400' },
-          { id: 'card', label: 'Credit / Debit', icon: CreditCard, color: 'text-emerald-400' },
-          { id: 'cash', label: 'Cash Tender', icon: Banknote, color: 'text-gold' },
-          { id: 'loyalty', label: 'Points / Gift', icon: Gift, color: 'text-copper' },
+          { id: 'upi', label: 'UPI / SCAN', icon: Smartphone, color: 'text-brand-gold' },
+          { id: 'card', label: 'CREDIT / CHIP', icon: CreditCard, color: 'text-brand-gold' },
+          { id: 'cash', label: 'CURRENCY', icon: Banknote, color: 'text-brand-gold' },
+          { id: 'loyalty', label: 'ELITE POINTS', icon: Gift, color: 'text-brand-gold' },
         ].map((m) => (
           <button
             key={m.id}
             onClick={() => setMethod(m.id as PaymentMethod)}
-            className={`flex flex-col items-center gap-6 p-10 rounded-[3rem] border-2 transition-all relative overflow-hidden group ${
+            className={`flex flex-col items-center gap-8 p-12 rounded-sm border-2 transition-all relative overflow-hidden group shadow-sm ${
               method === m.id 
-                ? 'bg-surface border-gold text-ivory ring-8 ring-gold/5' 
-                : 'bg-surface/50 border-iron/20 text-smoke hover:border-gold/30 hover:bg-surface'
+                ? 'bg-brand-maroon border-brand-maroon text-brand-ivory shadow-xl translate-y-[-4px]' 
+                : 'bg-white/40 border-brand-maroon/5 text-brand-maroon/40 hover:border-brand-maroon/20 hover:bg-brand-maroon/5'
             }`}
           >
-            <m.icon size={48} strokeWidth={1.5} className={`${method === m.id ? m.color : 'opacity-30 group-hover:opacity-60'} transition-all duration-500`} />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em]">{m.label}</span>
+            <m.icon size={56} strokeWidth={method === m.id ? 2 : 1} className={`${method === m.id ? 'text-brand-gold scale-110' : 'opacity-20'} transition-all duration-500`} />
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] italic">{m.label}</span>
             {method === m.id && (
-               <motion.div layoutId="active-method" className="absolute top-0 right-0 p-4"><div className="w-2 h-2 rounded-full bg-gold shadow-[0_0_10px_rgba(212,155,53,1)]" /></motion.div>
+               <motion.div layoutId="active-method" className="absolute top-4 right-4"><div className="w-2 h-2 rounded-full bg-brand-gold shadow-[0_0_15px_rgba(253,185,19,1)]" /></motion.div>
             )}
           </button>
         ))}
       </div>
 
-      <div className="flex-1 bg-surface border-t-2 border-iron/30 rounded-t-[5rem] p-12 flex flex-col items-center justify-between shadow-2xl mt-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-base/20 pointer-events-none" />
+      <div className="flex-1 bg-white/60 backdrop-blur-md border border-brand-maroon/10 rounded-sm p-14 flex flex-col items-center justify-between shadow-sm mt-8 relative overflow-hidden">
+        {/* Ledger texture */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/notebook.png')]" />
         
-        <div className="flex-1 w-full flex flex-col items-center justify-center space-y-10 relative z-10">
+        <div className="flex-1 w-full flex flex-col items-center justify-center space-y-12 relative z-10">
           <AnimatePresence mode="wait">
             {method === 'upi' ? (
               <motion.div 
                 key="upi"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="text-center space-y-8"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="text-center space-y-10"
               >
-                <div className="w-64 h-64 bg-white p-6 rounded-[3rem] mx-auto shadow-[0_0_100px_rgba(255,255,255,0.05)] border-8 border-gold/10">
-                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=brewpub@ybl&pn=Toit&am=1810" alt="QR Code" className="w-full h-full grayscale hover:grayscale-0 transition-all duration-700" />
+                <div className="w-72 h-72 bg-white p-8 rounded-sm mx-auto shadow-2xl border-4 border-brand-maroon/5 flex items-center justify-center relative">
+                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=brewpub@ybl&pn=Toit&am=1810" alt="QR Code" className="w-full h-full opacity-80 hover:opacity-100 transition-opacity" />
+                  <div className="absolute top-[-2px] left-[-2px] w-6 h-6 border-t-4 border-l-4 border-brand-gold rounded-tl-sm" />
+                  <div className="absolute top-[-2px] right-[-2px] w-6 h-6 border-t-4 border-r-4 border-brand-gold rounded-tr-sm" />
+                  <div className="absolute bottom-[-2px] left-[-2px] w-6 h-6 border-b-4 border-l-4 border-brand-gold rounded-bl-sm" />
+                  <div className="absolute bottom-[-2px] right-[-2px] w-6 h-6 border-b-4 border-r-4 border-brand-gold rounded-br-sm" />
                 </div>
                 <div>
-                  <p className="text-xl font-serif font-bold text-ivory tracking-tight mb-2">Scan & Pay</p>
-                  <p className="text-[10px] text-smoke uppercase tracking-widest font-black opacity-60">UPI ID: TOIT@STATION1</p>
+                  <p className="text-2xl font-heading font-black text-brand-maroon tracking-tighter uppercase italic mb-2 leading-none">Scan Registry QR</p>
+                  <p className="text-[10px] text-brand-maroon/40 uppercase tracking-[0.4em] font-black italic">TARGET ID: TOIT-GLLRY-01</p>
                 </div>
               </motion.div>
             ) : (
               <motion.div 
                 key="terminal"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="text-center space-y-8"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="text-center space-y-10"
               >
-                <div className="w-32 h-32 rounded-full border-2 border-stone-800 flex items-center justify-center mx-auto bg-base/50">
-                   <ShieldCheck size={64} className="text-zinc-800 animate-pulse" />
+                <div className="w-36 h-36 rounded-full border-4 border-brand-maroon/10 flex items-center justify-center mx-auto bg-brand-maroon/5 group shadow-inner">
+                   <ShieldCheck size={72} className="text-brand-maroon/40 animate-pulse" strokeWidth={3} />
                 </div>
                 <div>
-                  <p className="text-2xl font-serif font-bold text-ivory tracking-tight mb-3">Syncing with Terminal...</p>
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                     <span className="w-1 h-1 rounded-full bg-gold animate-bounce" />
-                     <span className="w-1 h-1 rounded-full bg-gold animate-bounce delay-100" />
-                     <span className="w-1 h-1 rounded-full bg-gold animate-bounce delay-200" />
+                  <p className="text-3xl font-heading font-black text-brand-maroon tracking-tighter uppercase italic mb-3 leading-none">Syncing Node Terminal...</p>
+                  <div className="flex items-center justify-center gap-2 mb-4">
+                     <span className="w-2 h-2 rounded-full bg-brand-gold animate-bounce" />
+                     <span className="w-2 h-2 rounded-full bg-brand-gold animate-bounce delay-100" />
+                     <span className="w-2 h-2 rounded-full bg-brand-gold animate-bounce delay-200" />
                   </div>
-                  <p className="text-[10px] text-smoke uppercase font-black tracking-widest opacity-50">Swipe, Tap or Insert Card on PIN Pad #2</p>
+                  <p className="text-[10px] text-brand-maroon/40 uppercase font-black tracking-[0.3em] italic">INSERT OR TAP CREDENTIALS ON PIN PAD #2</p>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        <div className="w-full max-w-2xl px-10 pb-4 flex gap-6 relative z-10 transition-all">
+        <div className="w-full max-w-2xl px-12 pb-6 flex gap-8 relative z-10 transition-all">
           <motion.button 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="p-6 rounded-3xl bg-base border border-iron/50 text-smoke hover:text-ivory hover:border-gold/30 transition-all"
+            className="w-20 h-20 rounded-sm bg-white/40 border-2 border-brand-maroon/10 text-brand-maroon/40 hover:text-brand-maroon hover:border-brand-maroon transition-all flex items-center justify-center shadow-sm"
           >
-            <ArrowLeft size={32} />
+            <ArrowLeft size={36} strokeWidth={4} />
           </motion.button>
           <motion.button 
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setIsSettled(true)}
-            className="flex-1 py-6 rounded-3xl bg-gold text-base font-black uppercase tracking-[0.3em] text-[12px] hover:brightness-110 shadow-2xl shadow-gold/20 active:scale-[0.98] transition-all gold-glow"
+            className="flex-1 py-6 rounded-sm bg-brand-maroon text-brand-ivory font-black uppercase tracking-[0.4em] text-[12px] shadow-2xl border-2 border-brand-maroon italic"
           >
-            CONFIRM SETTLEMENT
+            FORGE FINAL SETTLEMENT
           </motion.button>
         </div>
       </div>

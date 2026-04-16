@@ -14,7 +14,6 @@ import {
   History,
   Menu,
   X,
-  ChevronRight,
   Beer,
   LogOut
 } from 'lucide-react';

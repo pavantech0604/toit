@@ -79,24 +79,27 @@ export default function AdminLayout() {
   const allowedNavItems = NAV_ITEMS.filter(item => item.roles.includes(userRole));
 
   return (
-    <div className="flex h-screen bg-base text-ivory overflow-hidden">
+    <div className="flex h-screen bg-[#F5F5DC] text-brand-stout overflow-hidden font-body relative">
+       {/* Global Texture Overlay */}
+       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] z-0" />
+
       {/* Sidebar */}
       <aside 
         className={cn(
-          "bg-surface border-r border-iron/50 transition-all duration-300 flex flex-col z-50 shadow-2xl",
+          "bg-brand-maroon transition-all duration-500 flex flex-col z-50 shadow-[10px_0_30px_rgba(0,0,0,0.3)] relative",
           isSidebarOpen ? "w-64" : "w-20"
         )}
       >
-        <div className="p-4 flex items-center gap-3 border-b border-iron/30">
+        <div className="p-6 flex items-center gap-3 border-b border-white/10">
           <div className="bg-transparent text-base p-1 rounded-lg">
-            <img src={toitLogo} alt="Logo" className={cn("w-10 h-10 object-contain", !isSidebarOpen && "w-12 h-12")} />
+            <img src={toitLogo} alt="Logo" className={cn("w-10 h-10 object-contain brightness-100 contrast-125", !isSidebarOpen && "w-12 h-12")} />
           </div>
           {isSidebarOpen && (
-            <span className="font-serif font-bold text-lg tracking-tight">Toit</span>
+            <span className="font-heading font-black text-2xl tracking-tighter text-brand-ivory uppercase">Toit</span>
           )}
         </div>
 
-        <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 custom-scrollbar">
+        <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-2 custom-scrollbar">
           {allowedNavItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeModule === item.id;
@@ -106,81 +109,77 @@ export default function AdminLayout() {
                 key={item.id}
                 onClick={() => setActiveModule(item.id)}
                 className={cn(
-                  "w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all group relative",
+                  "w-full flex items-center gap-4 px-4 py-3.5 rounded-sm transition-all group relative",
                   isActive 
-                    ? "bg-gold text-base font-bold shadow-lg shadow-gold/10" 
-                    : "text-smoke hover:bg-white/5 hover:text-ivory"
+                    ? "bg-brand-gold text-brand-maroon font-black shadow-lg" 
+                    : "text-brand-ivory/60 hover:text-brand-gold hover:bg-white/5"
                 )}
               >
-                <Icon size={20} strokeWidth={isActive ? 2.5 : 2} />
-                {isSidebarOpen && <span className="text-sm truncate font-medium tracking-tight">{item.label}</span>}
+                <Icon size={20} strokeWidth={isActive ? 3 : 2} />
+                {isSidebarOpen && <span className="text-[11px] font-black uppercase tracking-[0.2em] truncate">{item.label}</span>}
                 {!isSidebarOpen && (
-                  <div className="absolute left-full ml-4 px-3 py-2 bg-elevated text-ivory text-xs rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-[100] border border-iron shadow-xl">
+                  <div className="absolute left-full ml-4 px-3 py-2 bg-brand-iron text-brand-ivory text-[10px] font-black uppercase tracking-widest rounded-sm opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-[100] border border-white/10 shadow-xl">
                     {item.label}
                   </div>
-                )}
-                {isActive && isSidebarOpen && (
-                  <ChevronRight size={14} className="ml-auto opacity-50" />
                 )}
               </button>
             );
           })}
         </nav>
 
-        <div className="p-4 border-t border-iron/30 flex flex-col gap-2">
+        <div className="p-4 border-t border-white/10 flex flex-col gap-2">
           <button 
             onClick={signOut}
             className={cn(
-              "w-full flex items-center gap-3 p-3 rounded-xl hover:bg-rose-500/10 text-rose-500 transition-colors group",
+              "w-full flex items-center gap-4 p-4 rounded-sm hover:bg-white/5 text-brand-ivory/40 hover:text-brand-gold transition-all group",
               !isSidebarOpen && "justify-center"
             )}
           >
-            <LogOut size={20} />
-            {isSidebarOpen && <span className="text-sm font-medium tracking-tight">Access Off</span>}
+            <LogOut size={18} />
+            {isSidebarOpen && <span className="text-[10px] font-black uppercase tracking-[0.25em]">Access Off</span>}
           </button>
           <button 
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="w-full flex items-center justify-center p-2 rounded-lg hover:bg-white/5 text-smoke hover:text-ivory transition-colors mt-2"
+            className="w-full flex items-center justify-center p-2 text-brand-ivory/20 hover:text-brand-gold transition-colors"
           >
-            {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+            {isSidebarOpen ? <X size={16} /> : <Menu size={16} />}
           </button>
         </div>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto flex flex-col relative bg-base">
+      <main className="flex-1 overflow-y-auto flex flex-col relative z-10">
         {/* Header */}
-        <header className="h-16 border-b border-iron/30 bg-surface/80 backdrop-blur-md flex items-center justify-between px-8 sticky top-0 z-40">
+        <header className="h-16 border-b border-brand-maroon/10 bg-brand-ivory/80 backdrop-blur-md flex items-center justify-between px-8 sticky top-0 z-40">
           <div className="flex items-center gap-4">
-            <h2 className="text-xl font-serif font-bold capitalize">
+            <h2 className="text-xl font-heading font-black text-brand-maroon uppercase tracking-tight">
               {NAV_ITEMS.find(n => n.id === activeModule)?.label}
             </h2>
-            <div className="h-4 w-[1px] bg-iron/30" />
-            <span className="text-[10px] text-smoke font-sans tracking-[0.2em] uppercase">Terminal: Station-01</span>
+            <div className="h-4 w-[1px] bg-brand-maroon/20" />
+            <span className="text-[9px] text-brand-maroon/40 font-black tracking-[0.3em] uppercase">Operations Terminal / Station-01</span>
           </div>
           
           <div className="flex items-center gap-6">
             <div className="flex flex-col items-end">
-              <span className="text-xs font-bold text-gold uppercase tracking-widest">{profile?.full_name || 'Admin'}</span>
-              <span className="text-[10px] text-smoke uppercase tracking-tight">{profile?.role || 'Manager'}</span>
+              <span className="text-[10px] font-black text-brand-maroon uppercase tracking-[0.2em]">{profile?.full_name || 'Admin'}</span>
+              <span className="text-[9px] text-brand-maroon/60 uppercase tracking-widest font-bold">{profile?.role || 'Manager'}</span>
             </div>
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-copper flex items-center justify-center text-base font-black text-sm border-2 border-base">
+            <div className="w-10 h-10 rounded-full bg-brand-maroon flex items-center justify-center text-brand-ivory font-black text-xs border-2 border-brand-gold/50 shadow-lg">
               {profile?.full_name?.charAt(0) || 'A'}
             </div>
           </div>
         </header>
 
         {/* Dynamic Screen Area */}
-        <section className="p-8 flex-1 animate-brew-reveal">
-          <div className="max-w-[1600px] mx-auto h-full">
+        <section className="p-8 flex-1 animate-brew-reveal max-w-[1600px] mx-auto w-full">
             {!allowedNavItems.find(i => i.id === activeModule) ? (
               <div className="flex flex-col items-center justify-center h-full text-center space-y-6">
-                 <div className="w-24 h-24 bg-rose-500/10 rounded-3xl flex items-center justify-center border border-rose-500/30">
-                    <X size={48} className="text-rose-500" />
+                 <div className="w-24 h-24 bg-brand-maroon/5 rounded-3xl flex items-center justify-center border border-brand-maroon/10">
+                    <X size={48} className="text-brand-maroon/40" />
                  </div>
                  <div>
-                   <h3 className="text-3xl font-serif font-bold text-ivory">Clearance Needed</h3>
-                   <p className="text-smoke font-sans">Your current terminal profile lacks access to "{activeModule}".</p>
+                   <h3 className="text-3xl font-heading font-black text-brand-maroon uppercase tracking-tighter">Clearance Needed</h3>
+                   <p className="text-brand-maroon/40 font-black uppercase text-[10px] tracking-widest mt-2">Your current terminal profile lacks access to "{activeModule}".</p>
                  </div>
               </div>
             ) : activeModule === 'admin' ? (
@@ -209,16 +208,15 @@ export default function AdminLayout() {
               <EODSummary />
             ) : (
               <div className="flex flex-col items-center justify-center h-full text-center space-y-6">
-                <div className="w-24 h-24 bg-elevated rounded-3xl flex items-center justify-center border border-iron/50 gold-glow">
-                   <Beer size={48} className="text-gold animate-pulse" />
+                <div className="w-24 h-24 bg-brand-maroon/5 rounded-3xl flex items-center justify-center border border-brand-maroon/10 shadow-inner">
+                   <Beer size={48} className="text-brand-gold animate-pulse" />
                 </div>
                 <div>
-                  <h3 className="text-3xl font-serif font-bold text-ivory">Brewing Module</h3>
-                  <p className="text-smoke font-sans">The "{activeModule}" operational nexus is being prepared.</p>
+                  <h3 className="text-3xl font-heading font-black text-brand-maroon uppercase tracking-tighter">Brewing Module</h3>
+                  <p className="text-brand-maroon/40 font-black uppercase text-[10px] tracking-widest mt-2">The "{activeModule}" operational nexus is being prepared.</p>
                 </div>
               </div>
             )}
-          </div>
         </section>
       </main>
     </div>

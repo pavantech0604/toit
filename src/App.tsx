@@ -5,6 +5,8 @@ import MenuPage from './pages/Menu/Menu';
 import AdminLayout from './pages/admin/AdminLayout';
 import LoginPage from './pages/LoginPage';
 import { AuthProvider } from './contexts/AuthContext';
+import BeerFinder from './pages/BeerFinder';
+import Reservations from './pages/Reservations';
 
 // Placeholder Pages for other routes
 const EventsPage = () => <div className="pt-32 pb-20 container mx-auto px-6 text-center text-5xl font-heading">Events & Experiences Coming Soon</div>;
@@ -22,7 +24,8 @@ function App() {
             <Route path="events" element={<EventsPage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="contact" element={<ContactPage />} />
-            <Route path="reservations" element={<div className="pt-32 pb-20 container mx-auto px-6 text-center text-5xl font-heading italic text-brand-gold">Booking System Online Soon</div>} />
+            <Route path="reservations" element={<Reservations />} />
+            <Route path="beer-finder" element={<BeerFinder />} />
             <Route path="order" element={<div className="pt-32 pb-20 container mx-auto px-6 text-center text-5xl font-heading italic text-brand-gold">Delivery Shop Loading...</div>} />
           </Route>
           

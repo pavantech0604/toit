@@ -6,8 +6,6 @@ import {
   ChevronRight,
   User,
   Phone,
-  CheckCircle2,
-  AlertCircle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 

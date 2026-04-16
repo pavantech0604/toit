@@ -69,7 +69,8 @@ export default function CustomerCRM() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4         {/* CRM Stats Sidebar */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
+        {/* CRM Stats Sidebar */}
         <div className="lg:col-span-1 space-y-6">
           <div className="bg-white/60 backdrop-blur-sm border border-brand-maroon/10 p-10 rounded-sm shadow-sm relative overflow-hidden group">
             <div className="flex items-center gap-3 mb-8 border-b border-brand-maroon/10 pb-6">
@@ -114,7 +115,7 @@ export default function CustomerCRM() {
               <p className="text-[9px] font-black text-brand-gold uppercase tracking-[0.3em] text-right italic">65% Reached</p>
             </div>
           </div>
-        </div>  </div>
+        </div>
 
         {/* Customer List: The Guest Archive */}
         <div className="lg:col-span-3 bg-white/80 backdrop-blur-md border border-brand-maroon/10 rounded-sm overflow-hidden flex flex-col shadow-sm relative">

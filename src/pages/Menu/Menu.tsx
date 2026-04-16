@@ -115,7 +115,7 @@ const MenuPage: React.FC = () => {
               We deliver our fresh brews and wood-fired mains to your doorstep.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-6">
-               <Button size="lg" variant="primary">Order Online</Button>
+               <Button size="lg" variant="maroon">Order Online</Button>
                <Button size="lg" variant="outline">Gift Cards</Button>
             </div>
           </div>

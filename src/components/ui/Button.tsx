@@ -11,7 +11,7 @@ import type { HTMLMotionProps } from 'framer-motion';
 
 interface ButtonProps extends Omit<HTMLMotionProps<"button">, "children"> {
   children?: React.ReactNode;
-  variant?: 'amber' | 'brass' | 'ghost' | 'outline' | 'ivory-dark' | 'maroon';
+  variant?: 'amber' | 'brass' | 'ghost' | 'outline' | 'ivory-dark' | 'maroon' | 'primary';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   isLoading?: boolean;
 }
@@ -24,7 +24,8 @@ const Button: React.FC<ButtonProps> = ({
   isLoading,
   ...props
 }) => {
-  const variants = {
+  const variants: Record<string, string> = {
+    primary: 'bg-brand-maroon text-brand-ivory hover:bg-black transition-all duration-500 font-bold tracking-[0.2em] uppercase shadow-lg',
     amber: 'bg-brand-amber text-brand-stout hover:bg-brand-foam transition-all duration-500 font-bold tracking-[0.2em] uppercase amber-glow text-shadow-premium',
     brass: 'bg-brand-brass text-brand-foam hover:bg-brand-amber hover:text-brand-stout transition-all duration-500 font-bold tracking-[0.2em] uppercase brass-glow',
     'ivory-dark': 'bg-brand-ivory text-brand-stout hover:bg-brand-amber transition-all duration-500 font-bold tracking-[0.2em] uppercase',

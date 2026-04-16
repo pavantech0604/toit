@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 
 // Custom SVG Social Icons (Gold Circle Style matching screenshot)
 const SocialCircle = ({ 

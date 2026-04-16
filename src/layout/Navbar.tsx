@@ -77,8 +77,8 @@ const Navbar: React.FC = () => {
                  <img 
                   src={toitLogo} 
                   alt="Toit" 
-                  className={`h-16 md:h-20 w-auto transition-all duration-700 group-hover:scale-110 relative z-10 ${
-                    isScrolled ? 'brightness-0 contrast-200' : ''
+                  className={`w-auto transition-all duration-700 group-hover:scale-110 relative z-10 ${
+                    isScrolled ? 'h-12' : 'h-16 md:h-20'
                   }`} 
                 />
               </div>

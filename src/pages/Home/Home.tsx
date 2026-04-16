@@ -5,6 +5,8 @@ import BreweryHeading from '../../components/shared/BreweryHeading';
 import LiquidFillCard from '../../components/shared/LiquidFillCard';
 import { ArrowDown, Play } from 'lucide-react';
 
+import heroImg from '../../assets/hero.png';
+
 const HomePage: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -32,11 +34,11 @@ const HomePage: React.FC = () => {
           className="absolute inset-0 z-0"
         >
           <div 
-            className="absolute inset-0 bg-cover bg-center scale-110 opacity-40 brightness-110 contrast-75 saturate-50"
-            style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1571705002911-b79b1d670418?q=80&w=2000&auto=format&fit=crop")' }}
+            className="absolute inset-0 bg-cover bg-center scale-110 opacity-60 brightness-110"
+            style={{ backgroundImage: `url(${heroImg})` }}
           />
           {/* Official Parchment/Ivory Fade */}
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-ivory/20 via-transparent to-brand-ivory" />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-ivory/40 via-transparent to-brand-ivory" />
           
           {/* Ambient Brewery Dust / Haze (Light) */}
           <div className="absolute inset-0 opacity-30 pointer-events-none">
